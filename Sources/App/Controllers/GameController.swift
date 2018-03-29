@@ -17,7 +17,7 @@ class GameController {
     players = [:]
     droplet = drop
     
-    droplet.socket("ws", handler: socketHandler)
+    droplet.socket("game", handler: socketHandler)
   }
   
   func socketHandler(request: Request, socket: WebSocket) throws {
@@ -32,6 +32,8 @@ class GameController {
     
     socket.onText = { socket, message in
       let json = try JSON(bytes: Array(message.utf8))
+      
+      print(json)
       
       guard let msgType = json.object?["command"]?.string, let player = json.object?["player"]?.string else {
         return
