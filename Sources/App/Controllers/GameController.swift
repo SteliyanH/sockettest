@@ -23,7 +23,7 @@ class GameController {
   func socketHandler(request: Request, socket: WebSocket) throws {
     var scribPlayer: String? = nil
     
-    try background {
+    background {
       while socket.state == .open {
         try? socket.ping()
         self.droplet.console.wait(seconds: 5)
@@ -44,7 +44,7 @@ class GameController {
         self.players[player] = socket
         
         let response = try JSON(node: [
-          "command":"connected",
+          "command": "connected",
           "username": player
           ])
         
